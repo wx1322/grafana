@@ -95,7 +95,6 @@ func Test_UnmarshalReduceCommand_Settings(t *testing.T) {
 }
 
 func TestReduceExecute(t *testing.T) {
-
 	varToReduce := util.GenerateShortUID()
 	cmd, err := NewReduceCommand(util.GenerateShortUID(), randomReduceFunc(), varToReduce, nil)
 	require.NoError(t, err)
