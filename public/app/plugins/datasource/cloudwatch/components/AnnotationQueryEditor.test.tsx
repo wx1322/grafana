@@ -1,8 +1,8 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { setupMockedDataSource } from '../__mocks__/CloudWatchDataSource';
+import React from 'react';
 import { CloudWatchAnnotationQuery } from '../types';
+import { setupMockedDataSource } from '../__mocks__/CloudWatchDataSource';
 import { AnnotationQueryEditor } from './AnnotationQueryEditor';
 
 const ds = setupMockedDataSource({
@@ -10,23 +10,20 @@ const ds = setupMockedDataSource({
 });
 
 const q: CloudWatchAnnotationQuery = {
-  id: '',
   region: 'us-east-2',
   namespace: '',
   period: '',
-  alias: '',
   metricName: '',
   dimensions: {},
   matchExact: true,
   statistic: '',
-  expression: '',
   refId: '',
-  enable: true,
   name: '',
-  iconColor: '',
   prefixMatching: false,
   actionPrefix: '',
   alarmNamePrefix: '',
+  enable: true,
+  iconColor: '',
 };
 
 ds.datasource.getRegions = jest.fn().mockResolvedValue([]);
