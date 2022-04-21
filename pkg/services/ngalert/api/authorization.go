@@ -96,6 +96,9 @@ func (api *API) authorize(method, path string) web.Handler {
 	case http.MethodPost + "/api/v1/rule/test/{DatasourceID}":
 		fallback = middleware.ReqSignedIn
 		eval = ac.EvalPermission(ac.ActionAlertingRuleExternalRead, datasources.ScopeProvider.GetResourceScope(ac.Parameter(":DatasourceID")))
+	case http.MethodPost + "/api/v1/rule/test/uid/{DatasourceUID}":
+		fallback = middleware.ReqSignedIn
+		eval = ac.EvalPermission(ac.ActionAlertingRuleExternalRead, datasources.ScopeProvider.GetResourceScope(ac.Parameter(":DatasourceUID")))
 
 	// Alert Instances and Silences
 

@@ -70,14 +70,31 @@ func (srv TestingApiSrv) RouteTestGrafanaRuleConfig(c *models.ReqContext, body a
 }
 
 func (srv TestingApiSrv) RouteTestRuleConfig(c *models.ReqContext, body apimodels.TestRulePayload) response.Response {
-	datasourceID := web.Params(c.Req)[":DatasourceID"]
 	if body.Type() != apimodels.LoTexRulerBackend {
 		return ErrResp(http.StatusBadRequest, errors.New("unexpected payload"), "")
 	}
 
 	var path string
-	if datasourceID, err := strconv.ParseInt(datasourceID, 10, 64); err == nil {
-		ds, err := srv.DatasourceCache.GetDatasource(context.Background(), datasourceID, c.SignedInUser, c.SkipCache)
+	datasourceID := web.Params(c.Req)[":DatasourceID"]
+	if datasourceID != "" {
+		if datasourceID, err := strconv.ParseInt(datasourceID, 10, 64); err == nil {
+			ds, err := srv.DatasourceCache.GetDatasource(context.Background(), datasourceID, c.SignedInUser, c.SkipCache)
+			if err != nil {
+				return ErrResp(http.StatusInternalServerError, err, "failed to get datasource")
+			}
+
+			switch ds.Type {
+			case "loki":
+				path = "loki/api/v1/query"
+			case "prometheus":
+				path = "api/v1/query"
+			default:
+				return ErrResp(http.StatusBadRequest, fmt.Errorf("unexpected datasource type %s", ds.Type), "")
+			}
+		}
+	} else {
+		datasourceUID := web.Params(c.Req)[":DatasourceUID"]
+		ds, err := srv.DatasourceCache.GetDatasourceByUID(context.Background(), datasourceUID, c.SignedInUser, c.SkipCache)
 		if err != nil {
 			return ErrResp(http.StatusInternalServerError, err, "failed to get datasource")
 		}
@@ -90,6 +107,7 @@ func (srv TestingApiSrv) RouteTestRuleConfig(c *models.ReqContext, body apimodel
 		default:
 			return ErrResp(http.StatusBadRequest, fmt.Errorf("unexpected datasource type %s", ds.Type), "")
 		}
+
 	}
 
 	t := timeNow()

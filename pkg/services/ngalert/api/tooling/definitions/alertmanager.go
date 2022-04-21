@@ -562,6 +562,8 @@ type DatasourceIDReference struct {
 
 // alertmanager routes
 // swagger:parameters RoutePostAlertingConfigWithUID RouteGetAlertingConfigWithUID RouteDeleteAlertingConfigWithUID RouteGetAMStatusWithUID RouteGetAMAlertsWithUID RoutePostAMAlertsWithUID RouteGetAMAlertGroupsWithUID RouteGetSilencesWithUID RouteCreateSilenceWithUID RouteGetSilenceWithUID RouteDeleteSilenceWithUID RoutePostAlertingConfigWithUID RoutePostTestReceiversWithUID
+// testing routes
+// swagger:parameters RouteTestRuleConfigWithUID
 type DatasourceUIDReference struct {
 	// DatasoureUID should be the datasource UID identifier
 	// in:path
