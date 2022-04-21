@@ -20,6 +20,13 @@ import (
 //     Responses:
 //       200: RuleResponse
 
+// swagger:route GET /api/prometheus/uid/{DatasourceUID}/api/v1/rules prometheus RouteGetRuleStatusesWithUID
+//
+// gets the evaluation statuses of all rules
+//
+//     Responses:
+//       200: RuleResponse
+
 // swagger:route GET /api/prometheus/grafana/api/v1/alerts prometheus RouteGetGrafanaAlertStatuses
 //
 // gets the current alerts
@@ -28,6 +35,13 @@ import (
 //       200: AlertResponse
 
 // swagger:route GET /api/prometheus/{DatasourceID}/api/v1/alerts prometheus RouteGetAlertStatuses
+//
+// gets the current alerts
+//
+//     Responses:
+//       200: AlertResponse
+
+// swagger:route GET /api/prometheus/uid/{DatasourceUID}/api/v1/alerts prometheus RouteGetAlertStatusesWithUID
 //
 // gets the current alerts
 //
