@@ -36,8 +36,8 @@ func toMacaronPath(path string) string {
 }
 
 func backendType(ctx *models.ReqContext, cache datasources.CacheService) (apimodels.Backend, error) {
-	datasourceID := web.Params(ctx.Req)[":DatasourceID"]
-	if datasourceID, err := strconv.ParseInt(datasourceID, 10, 64); err == nil {
+	recipient := web.Params(ctx.Req)[":DatasourceID"]
+	if datasourceID, err := strconv.ParseInt(recipient, 10, 64); err == nil {
 		if ds, err := cache.GetDatasource(ctx.Req.Context(), datasourceID, ctx.SignedInUser, ctx.SkipCache); err == nil {
 			switch ds.Type {
 			case "loki", "prometheus":
@@ -49,7 +49,7 @@ func backendType(ctx *models.ReqContext, cache datasources.CacheService) (apimod
 			}
 		}
 	}
-	return 0, fmt.Errorf("unexpected backend type (%v)", datasourceID)
+	return 0, fmt.Errorf("unexpected backend type (%v)", recipient)
 }
 
 func backendTypeByUID(ctx *models.ReqContext, cache datasources.CacheService) (apimodels.Backend, error) {

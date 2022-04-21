@@ -31,6 +31,16 @@ import (
 //     Responses:
 //       202: NamespaceConfigResponse
 
+// swagger:route Get /api/ruler/uid/{DatasourceUID}/api/v1/rules ruler RouteGetRulesConfigWithUID
+//
+// List rule groups
+//
+//     Produces:
+//     - application/json
+//
+//     Responses:
+//       202: NamespaceConfigResponse
+
 // swagger:route POST /api/ruler/grafana/api/v1/rules/{Namespace} ruler RoutePostNameGrafanaRulesConfig
 //
 // Creates or updates a rule group
@@ -44,6 +54,17 @@ import (
 //
 
 // swagger:route POST /api/ruler/{DatasourceID}/api/v1/rules/{Namespace} ruler RoutePostNameRulesConfig
+//
+// Creates or updates a rule group
+//
+//     Consumes:
+//     - application/json
+//     - application/yaml
+//
+//     Responses:
+//       202: Ack
+
+// swagger:route POST /api/ruler/uid/{DatasourceUID}/api/v1/rules/{Namespace} ruler RoutePostNameRulesConfigWithUID
 //
 // Creates or updates a rule group
 //
@@ -74,6 +95,16 @@ import (
 //     Responses:
 //       202: NamespaceConfigResponse
 
+// swagger:route Get /api/ruler/uid/{DatasourceUID}/api/v1/rules/{Namespace} ruler RouteGetNamespaceRulesConfigWithUID
+//
+// Get rule groups by namespace
+//
+//     Produces:
+//     - application/json
+//
+//     Responses:
+//       202: NamespaceConfigResponse
+
 // swagger:route Delete /api/ruler/grafana/api/v1/rules/{Namespace} ruler RouteDeleteNamespaceGrafanaRulesConfig
 //
 // Delete namespace
@@ -82,6 +113,13 @@ import (
 //       202: Ack
 
 // swagger:route Delete /api/ruler/{DatasourceID}/api/v1/rules/{Namespace} ruler RouteDeleteNamespaceRulesConfig
+//
+// Delete namespace
+//
+//     Responses:
+//       202: Ack
+
+// swagger:route Delete /api/ruler/uid/{DatasourceUID}/api/v1/rules/{Namespace} ruler RouteDeleteNamespaceRulesConfigWithUID
 //
 // Delete namespace
 //
@@ -98,7 +136,17 @@ import (
 //     Responses:
 //       202: RuleGroupConfigResponse
 
-// swagger:route Get /api/ruler/{DatasourceID}/api/v1/rules/{Namespace}/{Groupname} ruler RouteGetRulegGroupConfig
+// swagger:route Get /api/ruler/{DatasourceID}/api/v1/rules/{Namespace}/{Groupname} ruler RouteGetRuleGroupConfig
+//
+// Get rule group
+//
+//     Produces:
+//     - application/json
+//
+//     Responses:
+//       202: RuleGroupConfigResponse
+
+// swagger:route Get /api/ruler/uid/{DatasourceUID}/api/v1/rules/{Namespace}/{Groupname} ruler RouteGetRuleGroupConfigWithUID
 //
 // Get rule group
 //
@@ -122,7 +170,15 @@ import (
 //     Responses:
 //       202: Ack
 
+// swagger:route Delete /api/ruler/uid/{DatasourceUID}/api/v1/rules/{Namespace}/{Groupname} ruler RouteDeleteRuleGroupConfigWithUID
+//
+// Delete rule group
+//
+//     Responses:
+//       202: Ack
+
 // swagger:parameters RoutePostNameRulesConfig RoutePostNameGrafanaRulesConfig
+// swagger:parameters RoutePostNameRulesConfigWithUID RoutePostNameGrafanaRulesConfigWithUID
 type NamespaceConfig struct {
 	// in:path
 	Namespace string
@@ -131,12 +187,14 @@ type NamespaceConfig struct {
 }
 
 // swagger:parameters RouteGetNamespaceRulesConfig RouteDeleteNamespaceRulesConfig RouteGetNamespaceGrafanaRulesConfig RouteDeleteNamespaceGrafanaRulesConfig
+// swagger:parameters RouteGetNamespaceRulesConfigWithUID RouteDeleteNamespaceRulesConfigWithUID RouteGetNamespaceGrafanaRulesConfigWithUID RouteDeleteNamespaceGrafanaRulesConfigWithUID
 type PathNamespaceConfig struct {
 	// in: path
 	Namespace string
 }
 
-// swagger:parameters RouteGetRulegGroupConfig RouteDeleteRuleGroupConfig RouteGetGrafanaRuleGroupConfig RouteDeleteGrafanaRuleGroupConfig
+// swagger:parameters RouteGetRuleGroupConfig RouteDeleteRuleGroupConfig RouteGetGrafanaRuleGroupConfig RouteDeleteGrafanaRuleGroupConfig
+// swagger:parameters RouteGetRuleGroupConfigWithUID RouteDeleteRuleGroupConfigWithUID RouteGetGrafanaRuleGroupConfigWithUID RouteDeleteGrafanaRuleGroupConfigWithUID
 type PathRouleGroupConfig struct {
 	// in: path
 	Namespace string
@@ -145,6 +203,7 @@ type PathRouleGroupConfig struct {
 }
 
 // swagger:parameters RouteGetRulesConfig RouteGetGrafanaRulesConfig
+// swagger:parameters RouteGetRulesConfigWithUID RouteGetGrafanaRulesConfigWithUID
 type PathGetRulesParams struct {
 	// in: query
 	DashboardUID string

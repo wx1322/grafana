@@ -7910,6 +7910,208 @@
         }
       }
     },
+    "/ruler/uid/{DatasourceUID}/api/v1/rules": {
+      "get": {
+        "description": "List rule groups",
+        "produces": ["application/json"],
+        "tags": ["ruler"],
+        "operationId": "RouteGetRulesConfigWithUID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "DatasoureUID should be the datasource UID identifier",
+            "name": "DatasourceUID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "DashboardUID",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int64",
+            "name": "PanelID",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "NamespaceConfigResponse",
+            "schema": {
+              "$ref": "#/definitions/NamespaceConfigResponse"
+            }
+          }
+        }
+      }
+    },
+    "/ruler/uid/{DatasourceUID}/api/v1/rules/{Namespace}": {
+      "get": {
+        "description": "Get rule groups by namespace",
+        "produces": ["application/json"],
+        "tags": ["ruler"],
+        "operationId": "RouteGetNamespaceRulesConfigWithUID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "DatasoureUID should be the datasource UID identifier",
+            "name": "DatasourceUID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "Namespace",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "NamespaceConfigResponse",
+            "schema": {
+              "$ref": "#/definitions/NamespaceConfigResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates or updates a rule group",
+        "consumes": ["application/json", "application/yaml"],
+        "tags": ["ruler"],
+        "operationId": "RoutePostNameRulesConfigWithUID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "DatasoureUID should be the datasource UID identifier",
+            "name": "DatasourceUID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "Namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PostableRuleGroupConfig"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Ack",
+            "schema": {
+              "$ref": "#/definitions/Ack"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete namespace",
+        "tags": ["ruler"],
+        "operationId": "RouteDeleteNamespaceRulesConfigWithUID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "DatasoureUID should be the datasource UID identifier",
+            "name": "DatasourceUID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "Namespace",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Ack",
+            "schema": {
+              "$ref": "#/definitions/Ack"
+            }
+          }
+        }
+      }
+    },
+    "/ruler/uid/{DatasourceUID}/api/v1/rules/{Namespace}/{Groupname}": {
+      "get": {
+        "description": "Get rule group",
+        "produces": ["application/json"],
+        "tags": ["ruler"],
+        "operationId": "RouteGetRuleGroupConfigWithUID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "DatasoureUID should be the datasource UID identifier",
+            "name": "DatasourceUID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "Namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "Groupname",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "RuleGroupConfigResponse",
+            "schema": {
+              "$ref": "#/definitions/RuleGroupConfigResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete rule group",
+        "tags": ["ruler"],
+        "operationId": "RouteDeleteRuleGroupConfigWithUID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "DatasoureUID should be the datasource UID identifier",
+            "name": "DatasourceUID",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "Namespace",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "name": "Groupname",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Ack",
+            "schema": {
+              "$ref": "#/definitions/Ack"
+            }
+          }
+        }
+      }
+    },
     "/ruler/{DatasourceID}/api/v1/rules": {
       "get": {
         "description": "List rule groups",
@@ -8050,16 +8252,8 @@
         "description": "Get rule group",
         "produces": ["application/json"],
         "tags": ["ruler"],
-        "operationId": "RouteGetRulegGroupConfig",
+        "operationId": "RouteGetRuleGroupConfig",
         "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "DatasoureID should be the numeric datasource identifier",
-            "name": "DatasourceID",
-            "in": "path",
-            "required": true
-          },
           {
             "type": "string",
             "name": "Namespace",
@@ -17582,7 +17776,6 @@
       "x-go-package": "github.com/prometheus/alertmanager/api/v2/models"
     },
     "alertGroup": {
-      "description": "AlertGroup alert group",
       "type": "object",
       "required": ["alerts", "labels", "receiver"],
       "properties": {
@@ -17600,14 +17793,17 @@
         "receiver": {
           "$ref": "#/definitions/receiver"
         }
-      }
+      },
+      "x-go-name": "AlertGroup",
+      "x-go-package": "github.com/prometheus/alertmanager/api/v2/models"
     },
     "alertGroups": {
-      "description": "AlertGroups alert groups",
       "type": "array",
       "items": {
         "$ref": "#/definitions/alertGroup"
-      }
+      },
+      "x-go-name": "AlertGroups",
+      "x-go-package": "github.com/prometheus/alertmanager/api/v2/models"
     },
     "alertStatus": {
       "description": "AlertStatus alert status",
@@ -17710,6 +17906,7 @@
       "$ref": "#/definitions/Duration"
     },
     "gettableAlert": {
+      "description": "GettableAlert gettable alert",
       "type": "object",
       "required": ["labels", "annotations", "endsAt", "fingerprint", "receivers", "startsAt", "status", "updatedAt"],
       "properties": {
@@ -17759,20 +17956,16 @@
           "format": "date-time",
           "x-go-name": "UpdatedAt"
         }
-      },
-      "x-go-name": "GettableAlert",
-      "x-go-package": "github.com/prometheus/alertmanager/api/v2/models"
+      }
     },
     "gettableAlerts": {
+      "description": "GettableAlerts gettable alerts",
       "type": "array",
       "items": {
         "$ref": "#/definitions/gettableAlert"
-      },
-      "x-go-name": "GettableAlerts",
-      "x-go-package": "github.com/prometheus/alertmanager/api/v2/models"
+      }
     },
     "gettableSilence": {
-      "description": "GettableSilence gettable silence",
       "type": "object",
       "required": ["comment", "createdBy", "endsAt", "matchers", "startsAt", "id", "status", "updatedAt"],
       "properties": {
@@ -17815,14 +18008,17 @@
           "format": "date-time",
           "x-go-name": "UpdatedAt"
         }
-      }
+      },
+      "x-go-name": "GettableSilence",
+      "x-go-package": "github.com/prometheus/alertmanager/api/v2/models"
     },
     "gettableSilences": {
-      "description": "GettableSilences gettable silences",
       "type": "array",
       "items": {
         "$ref": "#/definitions/gettableSilence"
-      }
+      },
+      "x-go-name": "GettableSilences",
+      "x-go-package": "github.com/prometheus/alertmanager/api/v2/models"
     },
     "labelSet": {
       "description": "LabelSet label set",
