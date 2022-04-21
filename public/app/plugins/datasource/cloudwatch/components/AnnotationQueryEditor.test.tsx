@@ -1,7 +1,9 @@
+import { QueryEditorProps } from '@grafana/data';
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { CloudWatchAnnotationQuery } from '../types';
+import { CloudWatchDatasource } from '../datasource';
+import { CloudWatchAnnotationQuery, CloudWatchJsonData, CloudWatchQuery } from '../types';
 import { setupMockedDataSource } from '../__mocks__/CloudWatchDataSource';
 import { AnnotationQueryEditor } from './AnnotationQueryEditor';
 
@@ -9,7 +11,8 @@ const ds = setupMockedDataSource({
   variables: [],
 });
 
-const q: CloudWatchAnnotationQuery = {
+const q: CloudWatchQuery = {
+  queryMode: 'Annotations',
   region: 'us-east-2',
   namespace: '',
   period: '',
@@ -32,7 +35,7 @@ ds.datasource.getMetrics = jest.fn().mockResolvedValue([]);
 ds.datasource.getDimensionKeys = jest.fn().mockResolvedValue([]);
 ds.datasource.getVariables = jest.fn().mockReturnValue([]);
 
-const props = {
+const props: QueryEditorProps<CloudWatchDatasource, CloudWatchQuery, CloudWatchJsonData> = {
   datasource: ds.datasource,
   query: q,
   onChange: jest.fn(),
@@ -49,9 +52,8 @@ describe('AnnotationQueryEditor', () => {
 
   it('should not display wildcard option in dimension value dropdown', async () => {
     ds.datasource.getDimensionValues = jest.fn().mockResolvedValue([[{ label: 'dimVal1', value: 'dimVal1' }]]);
-    props.query.dimensions = { instanceId: 'instance-123' };
+    (props.query as CloudWatchAnnotationQuery).dimensions = { instanceId: 'instance-123' };
     render(<AnnotationQueryEditor {...props} />);
-
     const valueElement = screen.getByText('instance-123');
     expect(valueElement).toBeInTheDocument();
     expect(screen.queryByText('*')).toBeNull();

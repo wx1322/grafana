@@ -20,6 +20,7 @@ const metricStat: MetricStat = {
   metricName: '',
   dimensions: {},
   statistic: '',
+  matchExact: true,
 };
 
 const props = {

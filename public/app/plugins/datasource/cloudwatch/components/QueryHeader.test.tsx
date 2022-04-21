@@ -1,5 +1,5 @@
+import { act, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { render, screen, waitFor, act } from '@testing-library/react';
 import { CloudWatchLogsQuery, CloudWatchMetricsQuery, MetricEditorMode, MetricQueryType } from '../types';
 import { setupMockedDataSource } from '../__mocks__/CloudWatchDataSource';
 import QueryHeader from './QueryHeader';
@@ -13,6 +13,7 @@ describe('QueryHeader', () => {
   it('should display metric options for metrics', async () => {
     const query: CloudWatchMetricsQuery = {
       queryType: 'Metrics',
+      queryMode: 'Metrics',
       id: '',
       region: 'us-east-2',
       namespace: '',
