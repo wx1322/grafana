@@ -66,6 +66,7 @@ const legacyAnnotationQuery: LegacyAnnotationQuery = {
   hide: false,
   id: '',
   type: '',
+  statistics: [],
 };
 
 describe('annotationSupport', () => {
@@ -158,7 +159,7 @@ describe('annotationSupport', () => {
             actionPrefix: '',
           },
         };
-        expect(CloudWatchAnnotationSupport.prepareQuery(query)).toBeUndefined;
+        expect(CloudWatchAnnotationSupport.prepareQuery(query)).toBeUndefined();
       });
     });
   });
