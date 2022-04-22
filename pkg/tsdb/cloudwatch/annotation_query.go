@@ -99,12 +99,12 @@ func (e *cloudWatchExecutor) executeAnnotationQuery(pluginCtx backend.PluginCont
 			return nil, errutil.Wrap("failed to call cloudwatch:DescribeAlarmHistory", err)
 		}
 		for _, history := range resp.AlarmHistoryItems {
-			annotation := &annotationEvent{}
-			annotation.Time = *history.Timestamp
-			annotation.Title = *history.AlarmName
-			annotation.Tags = *history.HistoryItemType
-			annotation.Text = *history.HistorySummary
-			annotations = append(annotations, annotation)
+			annotations = append(annotations, &annotationEvent{
+				Time:  *history.Timestamp,
+				Title: *history.AlarmName,
+				Tags:  *history.HistoryItemType,
+				Text:  *history.HistorySummary,
+			})
 		}
 	}
 
