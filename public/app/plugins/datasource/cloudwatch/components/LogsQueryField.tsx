@@ -1,6 +1,4 @@
-// Libraries
 import { css } from '@emotion/css';
-// Types
 import { AbsoluteTimeRange, QueryEditorProps, SelectableValue } from '@grafana/data';
 import {
   BracesPlugin,

@@ -12,7 +12,6 @@ ds.datasource.getRegions = jest.fn().mockResolvedValue([]);
 describe('QueryHeader', () => {
   it('should display metric options for metrics', async () => {
     const query: CloudWatchMetricsQuery = {
-      queryType: 'Metrics',
       queryMode: 'Metrics',
       id: '',
       region: 'us-east-2',

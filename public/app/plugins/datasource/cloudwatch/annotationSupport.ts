@@ -4,7 +4,7 @@ import { isCloudWatchAnnotation } from './guards';
 import { CloudWatchAnnotationQuery, CloudWatchQuery, LegacyAnnotationQuery } from './types';
 
 export const CloudWatchAnnotationSupport = {
-  // converts legacy angular style queries to new format. Also sets the same default values as what used to be set in the deprecated angular directive
+  // converts legacy angular style queries to new format. Also sets the same default values as in the deprecated angular directive
   prepareAnnotation: (
     query: LegacyAnnotationQuery | AnnotationQuery<CloudWatchAnnotationQuery>
   ): AnnotationQuery<CloudWatchAnnotationQuery> => {
@@ -13,6 +13,7 @@ export const CloudWatchAnnotationSupport = {
     }
 
     return {
+      // setting AnnotationQuery props explicitly since spreading would incorrectly use props that should be on the target only
       datasource: query.datasource,
       enable: query.enable,
       iconColor: query.iconColor,

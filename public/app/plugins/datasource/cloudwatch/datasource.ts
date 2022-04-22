@@ -242,6 +242,7 @@ export class CloudWatchDatasource
     if (isCloudWatchLogsQuery(query)) {
       return !!query.logGroupNames?.length;
     } else if (isCloudWatchAnnotationQuery(query)) {
+      // annotation query validity already checked in annotationSupport
       return true;
     }
 
@@ -873,13 +874,12 @@ export class CloudWatchDatasource
     const annotationQueries: CloudWatchAnnotationQuery[] = [];
 
     targets.forEach((query) => {
-      const mode = query.queryMode ?? 'Metrics';
-      if (mode === 'Logs') {
-        logQueries.push(query as CloudWatchLogsQuery);
-      } else if (mode === 'Annotations') {
-        annotationQueries.push(query as CloudWatchAnnotationQuery);
+      if (isCloudWatchAnnotationQuery(query)) {
+        annotationQueries.push(query);
+      } else if (isCloudWatchLogsQuery(query)) {
+        logQueries.push(query);
       } else {
-        metricsQueries.push(query as CloudWatchMetricsQuery);
+        metricsQueries.push(query);
       }
     });
 
@@ -897,7 +897,6 @@ export class CloudWatchDatasource
 
     return queries.map((query) => ({
       ...query,
-      ...(!isCloudWatchAnnotationQuery(query) && { ...query, expression: this.replace(query.expression, scopedVars) }),
       region: this.getActualRegion(this.replace(query.region, scopedVars)),
       ...(isCloudWatchMetricsQuery(query) && this.interpolateMetricsQueryVariables(query, scopedVars)),
     }));
