@@ -97,12 +97,9 @@ export type CloudWatchQuery = CloudWatchMetricsQuery | CloudWatchLogsQuery | Clo
 
 export interface CloudWatchAnnotationQuery extends MetricStat, DataQuery {
   queryMode?: 'Annotations';
-  name: string;
   prefixMatching?: boolean;
   actionPrefix?: string;
   alarmNamePrefix?: string;
-  enable: boolean;
-  iconColor: string;
 }
 
 export type SelectableStrings = Array<SelectableValue<string>>;
@@ -387,8 +384,7 @@ export interface VariableQuery extends DataQuery {
   tags: string;
 }
 
-export interface LegacyAnnotationQuery {
-  refId?: string;
+export interface LegacyAnnotationQuery extends MetricStat, DataQuery {
   actionPrefix: string;
   alarmNamePrefix: string;
   alias: string;
@@ -408,6 +404,7 @@ export interface LegacyAnnotationQuery {
   prefixMatching: boolean;
   region: string;
   statistic: string;
+  statistics: string[];
   target: {
     limit: number;
     matchAny: boolean;

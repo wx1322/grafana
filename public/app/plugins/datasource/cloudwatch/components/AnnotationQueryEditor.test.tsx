@@ -21,12 +21,9 @@ const q: CloudWatchQuery = {
   matchExact: true,
   statistic: '',
   refId: '',
-  name: '',
   prefixMatching: false,
   actionPrefix: '',
   alarmNamePrefix: '',
-  enable: true,
-  iconColor: '',
 };
 
 ds.datasource.getRegions = jest.fn().mockResolvedValue([]);

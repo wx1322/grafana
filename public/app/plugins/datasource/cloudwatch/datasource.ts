@@ -316,11 +316,11 @@ export class CloudWatchDatasource
         namespace: this.templateSrv.replace(query.namespace),
         metricName: this.templateSrv.replace(query.metricName),
         dimensions: this.convertDimensionFormat(query.dimensions ?? {}, {}),
-        datasource: this.getRef(),
         period: query.period ? parseInt(query.period, 10) : 300,
         actionPrefix: query.actionPrefix ?? '',
         alarmNamePrefix: query.alarmNamePrefix ?? '',
         type: 'annotationQuery',
+        datasource: this.getRef(),
       })),
     }).pipe(
       map((r) => {
